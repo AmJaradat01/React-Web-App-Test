@@ -10,6 +10,8 @@ const Card = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+  background-color: ${(props) => props.theme.body};
+  color: ${(props) => props.theme.text};
 `;
 
 const StyledForm = styled.form`
@@ -19,43 +21,43 @@ const StyledForm = styled.form`
 
 const StyledLabel = styled.label`
   margin-bottom: 1rem;
+  color: ${(props) => props.theme.text};
 `;
 
 const StyledInput = styled.input`
   padding: 0.5rem;
   margin-top: 0.5rem;
-  border: 1px solid ${(props) => props.theme.inputBorder};
-  background-color: ${(props) => props.theme.inputBackground};
-  color: ${(props) => props.theme.text};
+  border: 1px solid #ccc;
   border-radius: 4px;
 `;
 
 const StyledTextArea = styled.textarea`
   padding: 0.5rem;
   margin-top: 0.5rem;
-  border: 1px solid ${(props) => props.theme.inputBorder};
-  background-color: ${(props) => props.theme.inputBackground};
-  color: ${(props) => props.theme.text};
+  border: 1px solid #ccc;
   border-radius: 4px;
 `;
 
 const StyledButton = styled.button`
   padding: 1rem;
   margin-top: 1rem;
-  color: ${(props) => props.theme.buttonText};
-  background-color: ${(props) => props.theme.buttonBackground};
+  color: white;
+  background-color: #007bff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 
   &:hover {
-    background-color: ${(props) => props.theme.buttonHover};
+    background-color: #0056b3;
   }
+`;
+
+const SuccessMessage = styled.div`
+  color: ${(props) => props.theme.successText};
 `;
 
 const ErrorMessage = styled.span`
   color: red;
-  font-size: 0.8rem;
 `;
 
 const ContactPage = () => {
@@ -79,7 +81,7 @@ const ContactPage = () => {
   }
 
   const validateEmail = (value) => {
-    const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!value.trim()) {
       setEmailError('Email is required');
     } else if (!emailRegex.test(value)) {
@@ -158,7 +160,7 @@ const ContactPage = () => {
           </StyledLabel>
           <StyledButton type="submit">Submit</StyledButton>
         </StyledForm>
-        {successMessage && <div>{successMessage}</div>}
+        {successMessage && <SuccessMessage>{successMessage}</SuccessMessage>}
       </Card>
       <Card>Contact us at: Irbid@Great.local</Card>
     </div>
