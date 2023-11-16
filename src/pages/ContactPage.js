@@ -27,28 +27,32 @@ const StyledLabel = styled.label`
 const StyledInput = styled.input`
   padding: 0.5rem;
   margin-top: 0.5rem;
-  border: 1px solid #ccc;
+  border: 1px solid ${(props) => props.theme.inputBorder};
+  background-color: ${(props) => props.theme.inputBackground};
+  color: ${(props) => props.theme.text};
   border-radius: 4px;
 `;
 
 const StyledTextArea = styled.textarea`
   padding: 0.5rem;
   margin-top: 0.5rem;
-  border: 1px solid #ccc;
+  border: 1px solid ${(props) => props.theme.inputBorder};
+  background-color: ${(props) => props.theme.inputBackground};
+  color: ${(props) => props.theme.text};
   border-radius: 4px;
 `;
 
 const StyledButton = styled.button`
   padding: 1rem;
   margin-top: 1rem;
-  color: white;
-  background-color: #007bff;
+  color: ${(props) => props.theme.buttonText};
+  background-color: ${(props) => props.theme.buttonBackground};
   border: none;
   border-radius: 4px;
   cursor: pointer;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: ${(props) => props.theme.buttonHover};
   }
 `;
 
