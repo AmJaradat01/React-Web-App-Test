@@ -10,11 +10,26 @@ const Card = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
+const Spinner = styled.div`
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid blue;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+`;
+
 const blogsResultsLimit = 12;
 
 const BlogPage = () => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,11 +39,14 @@ const BlogPage = () => {
         setPosts(response.data.slice(0, blogsResultsLimit));
       } catch (error) {
         setError(error);
+      } finally {
+        setIsLoading(false);
       }
     }
     fetchData();
   }, []);
 
+  if (isLoading) return ( <div> <Spinner /> </div> )
   if (error) return ( <div> <Card> <p>Something wrong while fetching the blogs data, please try again</p> </Card> </div> )
 
   if (posts.length) {
