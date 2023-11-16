@@ -63,12 +63,15 @@ const ContactPage = () => {
   const [messageError, setMessageError] = useState('');
 
   const validateName = (value) => {
+    const nameRegex = /^[a-zA-Z\s,.'-]{3,}$/;
     if (!value.trim()) {
       setNameError('Name is required');
+    } else if (!nameRegex.test(value)) {
+      setNameError('Please enter a valid Name');
     } else {
       setNameError('');
     }
-  };
+  }
 
   const validateEmail = (value) => {
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -133,7 +136,7 @@ const ContactPage = () => {
           </StyledLabel>
           <StyledLabel>
             <span>Your Message:</span>
-            <StyledTextArea name="message" value={message} onChange={handleMessageChange}/>
+            <StyledTextArea name="message" value={message} onChange={handleMessageChange} />
             {messageError && <ErrorMessage>{messageError}</ErrorMessage>}
           </StyledLabel>
           <StyledButton type="submit">Submit</StyledButton>
