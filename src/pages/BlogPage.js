@@ -5,7 +5,8 @@ import styled from 'styled-components';
 const Card = styled.div`
   margin: 2rem;
   padding: 1rem;
-  background-color: #f7f7f7;
+  background-color: ${(props) => props.theme.body};
+  color: ${(props) => props.theme.text};
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
@@ -20,7 +21,7 @@ const SpinnerContainer = styled.div`
 const Spinner = styled.div`
   border: 4px solid rgba(0, 0, 0, 0.1);
   border-radius: 50%;
-  border-top: 4px solid blue;
+  border-top: 4px solid ${(props) => props.theme.spinnerColor};
   width: 50px;
   height: 50px;
   animation: spin 2s linear infinite;
@@ -29,6 +30,9 @@ const Spinner = styled.div`
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+`;
+const StyledLink = styled.a`
+  color: ${(props) => props.theme.linkColor};
 `;
 
 const blogsResultsLimit = 12;
@@ -63,7 +67,7 @@ const BlogPage = () => {
       <div>
         {posts.map(post => (
           <Card key={post.id}>
-            <a href="localhost:3000/"><h3>{post.title}</h3></a>
+            <StyledLink href="localhost:3000/"><h3>{post.title}</h3></StyledLink>
             <p>{post.body}</p>
           </Card>
         ))}
