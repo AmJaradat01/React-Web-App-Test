@@ -10,6 +10,13 @@ const Card = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
+const SpinnerContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
+
 const Spinner = styled.div`
   border: 4px solid rgba(0, 0, 0, 0.1);
   border-radius: 50%;
@@ -46,7 +53,7 @@ const BlogPage = () => {
     fetchData();
   }, []);
 
-  if (isLoading) return ( <div> <Spinner /> </div> )
+  if (isLoading) return ( <SpinnerContainer> <Spinner /> </SpinnerContainer> )
   if (error) return ( <div> <Card> <p>Something wrong while fetching the blogs data, please try again</p> </Card> </div> )
 
   if (posts.length) {
