@@ -85,8 +85,11 @@ const ContactPage = () => {
   };
 
   const validateMessage = (value) => {
+    const messageRegex = /^[^<>{}]*$/;
     if (!value.trim()) {
       setMessageError('Message is required');
+    } else if (!messageRegex.test(value)) {
+      setMessageError('Invalid characters in message');
     } else {
       setMessageError('');
     }
