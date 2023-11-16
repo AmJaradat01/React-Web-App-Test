@@ -43,8 +43,10 @@ const BlogPage = () => {
       try {
         const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
 
-        setPosts(response.data.slice(0, blogsResultsLimit));
-      } catch (error) {
+        const shuffledPosts = response.data.sort(() => 0.5 - Math.random()).slice(0, blogsResultsLimit);
+
+        setPosts(shuffledPosts);
+        } catch (error) {
         setError(error);
       } finally {
         setIsLoading(false);
