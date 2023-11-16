@@ -61,6 +61,7 @@ const ContactPage = () => {
   const [nameError, setNameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [messageError, setMessageError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const validateName = (value) => {
     const nameRegex = /^[a-zA-Z\s,.'-]{3,}$/;
@@ -116,11 +117,20 @@ const ContactPage = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (!name.trim() || !email.trim() || !message.trim()) {
-      alert('Please fill out all fields before submitting.');
+    validateName(name);
+    validateEmail(email);
+    validateMessage(message);
+
+    if (nameError || emailError || messageError || !name || !email || !message) {
+      alert('Please correct the errors before submitting.');
       return;
     }
-  }
+
+    setSuccessMessage('Your message has been sent successfully!');
+    setName('');
+    setEmail('');
+    setMessage('');
+  };
 
   return (
     <div>
@@ -144,6 +154,7 @@ const ContactPage = () => {
           </StyledLabel>
           <StyledButton type="submit">Submit</StyledButton>
         </StyledForm>
+        {successMessage && <div>{successMessage}</div>}
       </Card>
       <Card>Contact us at: Irbid@Great.local</Card>
     </div>
