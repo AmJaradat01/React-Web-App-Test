@@ -13,39 +13,42 @@ const Card = styled.div`
 const blogsResultsLimit = 12;
 
 const BlogPage = () => {
-    const [posts, setPosts] = useState([]);
-  
-    useEffect(() => {
-        axios.get('https://jsonplaceholder.typicode.com/posts')
-          .then(response => {
-            setPosts(response.data.slice(0, blogsResultsLimit));
-          })
-          .catch(error => {
-            console.log(error);
-            return (<div>
-                <Card> <p>Something wrong while fetch the blogs data, please try again</p> </Card>
-              </div>)
-          });
-      }, []);
+  const [posts, setPosts] = useState([]);
+  const [error, setError] = useState(null);
 
-      if (posts.length) {
-        return (
-            <div>
-            {posts.map(post => (
-              <Card key={post.id}>
-                <a href="localhost:3000/"><h3>{post.title}</h3></a>
-                <p>{post.body}</p>
-              </Card>
-            ))}
-          </div>
-        )
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
+
+        setPosts(response.data.slice(0, blogsResultsLimit));
+      } catch (error) {
+        setError(error);
       }
+    }
+    fetchData();
+  }, []);
 
-      return (
-        <div>
-            <Card> <p>We don't have any Blogs for today, see you later!</p> </Card>
-          </div>
-      )
+  if (error) return ( <div> <Card> <p>Something wrong while fetching the blogs data, please try again</p> </Card> </div> )
+
+  if (posts.length) {
+    return (
+      <div>
+        {posts.map(post => (
+          <Card key={post.id}>
+            <a href="localhost:3000/"><h3>{post.title}</h3></a>
+            <p>{post.body}</p>
+          </Card>
+        ))}
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        <Card> <p>We don't have any Blogs for today, see you later!</p> </Card>
+      </div>
+    )
   }
-  
+}
+
 export default BlogPage;
