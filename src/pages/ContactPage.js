@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Card = styled.div`
@@ -55,25 +55,86 @@ const ErrorMessage = styled.span`
 `;
 
 const ContactPage = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [nameError, setNameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [messageError, setMessageError] = useState('');
+
+  const validateName = (value) => {
+    if (!value.trim()) {
+      setNameError('Name is required');
+    } else {
+      setNameError('');
+    }
+  };
+
+  const validateEmail = (value) => {
+    const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!value.trim()) {
+      setEmailError('Email is required');
+    } else if (!emailRegex.test(value)) {
+      setEmailError('Please enter a valid email address');
+    } else {
+      setEmailError('');
+    }
+  };
+
+  const validateMessage = (value) => {
+    if (!value.trim()) {
+      setMessageError('Message is required');
+    } else {
+      setMessageError('');
+    }
+  };
+
+  const handleNameChange = (event) => {
+    const newValue = event.target.value;
+    setName(newValue);
+    validateName(newValue);
+  };
+
+  const handleEmailChange = (event) => {
+    const newValue = event.target.value;
+    setEmail(newValue);
+    validateEmail(newValue);
+  };
+
+  const handleMessageChange = (event) => {
+    const newValue = event.target.value;
+    setMessage(newValue);
+    validateMessage(newValue);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    if (!name.trim() || !email.trim() || !message.trim()) {
+      alert('Please fill out all fields before submitting.');
+      return;
+    }
+  }
+
   return (
     <div>
       <Card>
         <h3>Contact Us</h3>
-        <StyledForm>
+        <StyledForm onSubmit={handleSubmit}>
           <StyledLabel>
             <span>Your Full Name:</span>
-            <StyledInput type="text" name="name" required />
-            <ErrorMessage className="error-message"></ErrorMessage>
+            <StyledInput type="text" name="name" value={name} onChange={handleNameChange} />
+            {nameError && <ErrorMessage>{nameError}</ErrorMessage>}
           </StyledLabel>
           <StyledLabel>
             <span>Your Email:</span>
-            <StyledInput type="email" name="email" required />
-            <ErrorMessage className="error-message"></ErrorMessage>
+            <StyledInput type="email" name="email" value={email} onChange={handleEmailChange} />
+            {emailError && <ErrorMessage>{emailError}</ErrorMessage>}
           </StyledLabel>
           <StyledLabel>
             <span>Your Message:</span>
-            <StyledTextArea name="message" required></StyledTextArea>
-            <ErrorMessage className="error-message"></ErrorMessage>
+            <StyledTextArea name="message" value={message} onChange={handleMessageChange}/>
+            {messageError && <ErrorMessage>{messageError}</ErrorMessage>}
           </StyledLabel>
           <StyledButton type="submit">Submit</StyledButton>
         </StyledForm>
